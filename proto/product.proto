@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package product;
+
+option go_package = "/proto";
+
+service ProductService {
+    rpc GetProductById (ProductRequest) returns (ProductResponse);
+}
+
+message ProductRequest {
+    uint64 product_id = 1;
+}
+
+message ProductResponse {
+    uint64 id = 1;
+    string name = 2;
+    float price = 3;
+}
