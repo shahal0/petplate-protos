@@ -7,6 +7,12 @@ option go_package = "/proto";
 service ProductService {
     rpc GetProductById (ProductRequest) returns (ProductResponse);
 }
+message ProductDetail {
+  string ProductId = 1;
+  string Name = 2;
+  float Price = 3;
+  int32 Quantity = 4;
+}
 
 message ProductRequest {
     uint64 product_id = 1;
