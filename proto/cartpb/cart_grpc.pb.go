@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v5.29.3
-// source: cartpb/cart.proto
+// source: proto/cartpb/cart.proto
 
 package proto
 
@@ -22,6 +22,7 @@ const (
 	CartService_AddToCart_FullMethodName      = "/proto.CartService/AddToCart"
 	CartService_GetCart_FullMethodName        = "/proto.CartService/GetCart"
 	CartService_RemoveFromCart_FullMethodName = "/proto.CartService/RemoveFromCart"
+	CartService_RemoveAllItems_FullMethodName = "/proto.CartService/RemoveAllItems"
 )
 
 // CartServiceClient is the client API for CartService service.
@@ -31,6 +32,7 @@ type CartServiceClient interface {
 	AddToCart(ctx context.Context, in *AddToCartRequest, opts ...grpc.CallOption) (*AddToCartResponse, error)
 	GetCart(ctx context.Context, in *GetCartRequest, opts ...grpc.CallOption) (*CartResponse, error)
 	RemoveFromCart(ctx context.Context, in *RemoveFromCartRequest, opts ...grpc.CallOption) (*RemoveFromCartResponse, error)
+	RemoveAllItems(ctx context.Context, in *RemoveAllItemsRequest, opts ...grpc.CallOption) (*RemoveAllItemsResponse, error)
 }
 
 type cartServiceClient struct {
@@ -71,6 +73,16 @@ func (c *cartServiceClient) RemoveFromCart(ctx context.Context, in *RemoveFromCa
 	return out, nil
 }
 
+func (c *cartServiceClient) RemoveAllItems(ctx context.Context, in *RemoveAllItemsRequest, opts ...grpc.CallOption) (*RemoveAllItemsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RemoveAllItemsResponse)
+	err := c.cc.Invoke(ctx, CartService_RemoveAllItems_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CartServiceServer is the server API for CartService service.
 // All implementations must embed UnimplementedCartServiceServer
 // for forward compatibility.
@@ -78,6 +90,7 @@ type CartServiceServer interface {
 	AddToCart(context.Context, *AddToCartRequest) (*AddToCartResponse, error)
 	GetCart(context.Context, *GetCartRequest) (*CartResponse, error)
 	RemoveFromCart(context.Context, *RemoveFromCartRequest) (*RemoveFromCartResponse, error)
+	RemoveAllItems(context.Context, *RemoveAllItemsRequest) (*RemoveAllItemsResponse, error)
 	mustEmbedUnimplementedCartServiceServer()
 }
 
@@ -96,6 +109,9 @@ func (UnimplementedCartServiceServer) GetCart(context.Context, *GetCartRequest) 
 }
 func (UnimplementedCartServiceServer) RemoveFromCart(context.Context, *RemoveFromCartRequest) (*RemoveFromCartResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveFromCart not implemented")
+}
+func (UnimplementedCartServiceServer) RemoveAllItems(context.Context, *RemoveAllItemsRequest) (*RemoveAllItemsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveAllItems not implemented")
 }
 func (UnimplementedCartServiceServer) mustEmbedUnimplementedCartServiceServer() {}
 func (UnimplementedCartServiceServer) testEmbeddedByValue()                     {}
@@ -172,6 +188,24 @@ func _CartService_RemoveFromCart_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CartService_RemoveAllItems_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveAllItemsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CartServiceServer).RemoveAllItems(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CartService_RemoveAllItems_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CartServiceServer).RemoveAllItems(ctx, req.(*RemoveAllItemsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CartService_ServiceDesc is the grpc.ServiceDesc for CartService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -191,7 +225,11 @@ var CartService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "RemoveFromCart",
 			Handler:    _CartService_RemoveFromCart_Handler,
 		},
+		{
+			MethodName: "RemoveAllItems",
+			Handler:    _CartService_RemoveAllItems_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "cartpb/cart.proto",
+	Metadata: "proto/cartpb/cart.proto",
 }
