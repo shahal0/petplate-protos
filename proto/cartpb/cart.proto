@@ -8,6 +8,7 @@ service CartService {
     rpc AddToCart(AddToCartRequest) returns (AddToCartResponse);
     rpc GetCart(GetCartRequest) returns (CartResponse);
     rpc RemoveFromCart(RemoveFromCartRequest) returns (RemoveFromCartResponse);
+    rpc RemoveAllItems(RemoveAllItemsRequest) returns (RemoveAllItemsResponse);
 }
 
 message CartItem {
@@ -21,7 +22,12 @@ message ProductDetail {
   double price = 3;
   int32 quantity = 4;
 }
-
+message RemoveAllItemsRequest {
+    string user_id = 1;
+}
+message RemoveAllItemsResponse {
+    string message = 1;
+}
 message CartResponse {
   string user_id = 1;
   string user_name = 2;
