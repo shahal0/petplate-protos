@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package orderservice;
+
+option go_package = "proto/";
+
+service OrderService {
+  rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse);
+  rpc GetOrder(GetOrderRequest) returns (GetOrderResponse);
+  rpc ListOrders(ListOrdersRequest) returns (ListOrdersResponse);
+}
+
+message CreateOrderRequest {
+  string user_id = 1;
+  string payment_method = 2; // New field for payment method
+}
+
+message CreateOrderResponse {
+  string order_id = 1;
+  string message = 2;
+}
+message Order {
+  string order_id = 1;
+  string user_id = 2;
+  double total_price = 3;
+  string status = 4;
+  string payment_method = 5;
+  repeated OrderItem items = 6;
+}
+
+message GetOrderRequest {
+  string order_id = 1;
+}
+
+message GetOrderResponse {
+  string order_id = 1;
+  string user_id = 2;
+  double total_price = 3;
+  repeated OrderItem items = 4;
+  string status = 5;
+  string payment_method = 6; // Include payment method in response
+}
+
+message ListOrdersRequest {
+  string user_id = 1;
+}
+
+message ListOrdersResponse {
+  repeated GetOrderResponse orders = 1;
+}
+
+message OrderItem {
+  string product_id = 1;
+  int32 quantity = 2;
+  double price = 3;
+}
