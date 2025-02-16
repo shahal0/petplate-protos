@@ -5,7 +5,34 @@ package userpb;
 option go_package = "proto/userpb";
 
 service UserService {
-    rpc GetUserById (UserRequest) returns (UserResponse);
+    rpc Signup(SignupRequest) returns (SignupResponse);
+    rpc Login(LoginRequest) returns (LoginResponse);
+    rpc GetUserById(UserRequest) returns (UserResponse);
+}
+
+message SignupRequest {
+    string name = 1;
+    string email = 2;
+    string password = 3;
+}
+
+message SignupResponse {
+    uint64 id = 1;
+    string name = 2;
+    string email = 3;
+    string token = 4;
+}
+
+message LoginRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message LoginResponse {
+    uint64 id = 1;
+    string name = 2;
+    string email = 3;
+    string token = 4;
 }
 
 message UserRequest {
