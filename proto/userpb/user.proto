@@ -20,7 +20,7 @@ message SignupResponse {
     uint64 id = 1;
     string name = 2;
     string email = 3;
-    string token = 4;
+    string message = 4; // Added a message field for signup confirmation
 }
 
 message LoginRequest {
@@ -33,6 +33,7 @@ message LoginResponse {
     string name = 2;
     string email = 3;
     string token = 4;
+    string role = 5; // Added role field if needed for authorization
 }
 
 message UserRequest {

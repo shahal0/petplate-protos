@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v5.29.3
-// source: orderpb/order.proto
+// source: proto/orderpb/order.proto
 
 package proto
 
@@ -193,5 +193,5 @@ var OrderService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "orderpb/order.proto",
+	Metadata: "proto/orderpb/order.proto",
 }

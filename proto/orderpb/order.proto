@@ -11,21 +11,20 @@ service OrderService {
 }
 
 message CreateOrderRequest {
-  string user_id = 1;
-  string payment_method = 2; // New field for payment method
+  string payment_method = 1; // Removed user_id
 }
 
 message CreateOrderResponse {
   string order_id = 1;
   string message = 2;
 }
+
 message Order {
   string order_id = 1;
-  string user_id = 2;
-  double total_price = 3;
-  string status = 4;
-  string payment_method = 5;
-  repeated OrderItem items = 6;
+  double total_price = 2;
+  string status = 3;
+  string payment_method = 4;
+  repeated OrderItem items = 5;
 }
 
 message GetOrderRequest {
@@ -34,16 +33,13 @@ message GetOrderRequest {
 
 message GetOrderResponse {
   string order_id = 1;
-  string user_id = 2;
-  double total_price = 3;
-  repeated OrderItem items = 4;
-  string status = 5;
-  string payment_method = 6; // Include payment method in response
+  double total_price = 2;
+  repeated OrderItem items = 3;
+  string status = 4;
+  string payment_method = 5;
 }
 
-message ListOrdersRequest {
-  string user_id = 1;
-}
+message ListOrdersRequest {} // Removed user_id
 
 message ListOrdersResponse {
   repeated GetOrderResponse orders = 1;
