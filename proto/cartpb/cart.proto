@@ -12,9 +12,8 @@ service CartService {
 }
 
 message CartItem {
-    uint32 user_id = 1;
-    string product_id = 2;
-    int32 quantity = 3;
+  uint64 product_id = 1;
+  uint32 quantity = 2;
 }
 
 message ProductDetail {
@@ -41,8 +40,8 @@ message CartResponse {
 }
 
 message AddToCartRequest {
-    CartItem item = 1;    // Accept only one item at a time
-    uint32 stock = 2;
+  uint64 user_id = 1;
+  repeated CartItem items = 2;
 }
 
 message AddToCartResponse {
